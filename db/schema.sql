@@ -16,13 +16,13 @@ CREATE TABLE locations
 (
 	locationId INT NOT NULL AUTO_INCREMENT,
 	userId INT,
+    location POINT NOT NULL,
     PRIMARY KEY(locationId),
-    
     FOREIGN KEY (userId)
     REFERENCES users(userId)
 );
 
--- decimmal 6
+
 
 
 
@@ -34,8 +34,8 @@ CREATE TABLE content
 	contentId INT NOT NULL AUTO_INCREMENT,
 	locationId INT NOT NULL,
     name VARCHAR(10),
-    review VARCHAR(150),
-
+    review VARCHAR(250),
+    image VARCHAR(250),
 	address VARCHAR(150),
     FOREIGN KEY(locationId)
     REFERENCES locations(locationId),
