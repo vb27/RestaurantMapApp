@@ -11,23 +11,15 @@ CREATE TABLE users
 	PRIMARY KEY (userId)
 );
 
-
 CREATE TABLE locations
 (
 	locationId INT NOT NULL AUTO_INCREMENT,
 	userId INT,
-    location POINT NOT NULL,
-    PRIMARY KEY(locationId),
+    cords POINT NOT NULL,
     FOREIGN KEY (userId)
-    REFERENCES users(userId)
+    REFERENCES users(userId),
+    PRIMARY KEY(locationId)
 );
-
-
-
-
-
-
-
 
 CREATE TABLE content
 (
