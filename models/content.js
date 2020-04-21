@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    const Content = sequelize.define("User", {
+    const Content = sequelize.define("Content", {
         // Giving the Author model a name of type STRING
 
 
@@ -26,13 +26,13 @@ module.exports = function (sequelize, DataTypes) {
         }
 
     });
-    // Content.associate = function (models) {
-    //     // Associating Location with Content
-    //     // When an Location is deleted, also delete any associated Content
-    //     Content.hasMany(models.Content, {
-    //         onDelete: "cascade"
-    //     });
-    // };
+    Content.associate = function (models) {
+        // Associating Location with Content
+        // When an Location is deleted, also delete any associated Content
+        Content.belongsTo(models.Location, {
+            foreignKey: { allowNull: false }
+        });
+    };
 
     return Content;
 };

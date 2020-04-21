@@ -1,8 +1,6 @@
-module.exports = function (sequelize, DataTypes) {
+ module.exports = function (sequelize, DataTypes) {
     const Location = sequelize.define("Location", {
         // Giving the Author model a name of type STRING
-
-
         locationId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -15,7 +13,6 @@ module.exports = function (sequelize, DataTypes) {
                 isFloat:true
             }
         },
-       
     });
     Location.associate = function (models) {
         // Associating Location with Content
@@ -24,7 +21,6 @@ module.exports = function (sequelize, DataTypes) {
             onDelete: "cascade"
         });
     };
-
     return Location;
-    
+
 };
