@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 
-module.exports = function (sequelize, DataTypes) { 
+module.exports = function (sequelize, DataTypes) {
     const User = sequelize.define("user", {
         // Giving the Author model a name of type STRING
 
@@ -14,6 +14,9 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             unique: true,
             allowNull: false,
+            // validate:{
+            //     notNull:{args:true,msg: "Enter"}
+            // }
 
         },
         password: {
@@ -23,12 +26,14 @@ module.exports = function (sequelize, DataTypes) {
                 len: [8]
             }
         }
+    }, {
+        timestamps: false
     });
 
-    // User.beforeCreate(function (user) {
-    //     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+    User.beforeCreate(function (user) {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
 
-    // });
+    });
 
 
 
