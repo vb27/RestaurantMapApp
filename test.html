@@ -34,6 +34,7 @@
         font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
       }
     </style>
+
     <form id="movie-form">
       <label for="location-input">Search Location</label>
       <input type="text" id="location-input" />
@@ -43,26 +44,30 @@
       <input type="text" id="location-desc" />
       <input id="find-location" type="submit" value="Location Search" />
     </form>
+
     <div id="map"></div>
+
     <script>
-      const locArr = [];
-      const titlesArr = [];
+    const titlesArr = []
+
       mapboxgl.accessToken =
-        "pk.eyJ1IjoidmIyNyIsImEiOiJjazk4cjdteTgwNDNiM21xdHQ1Y3BtbWhyIn0.oyEQCIxSrbYI1VZ208kcPw"; // replace this with your access token
+        "pk.eyJ1IjoidmIyNyIsImEiOiJjazk4cjdteTgwNDNiM21xdHQ1Y3BtbWhyIn0.oyEQCIxSrbYI1VZ208kcPw";
       var map = new mapboxgl.Map({
         container: "map",
-        style: "mapbox://styles/vb27/ck98rwfum06mc1ikcz89mqepw", // replace this with your style URL
+        style: "mapbox://styles/vb27/ck98rwfum06mc1ikcz89mqepw",
         center: [-122.3321, 47.6062],
         zoom: 7,
         maxzoom: 7,
       });
-      // code from the next step will go here
+
       $("#find-location").on("click", function (event) {
         event.preventDefault();
 
         var location = $("#location-input").val();
         var desc = $("#location-desc").val();
         var title = $("#location-title").val();
+
+        titlesArr.push(title)
 
         var queryURL =
           "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
@@ -76,25 +81,15 @@
           // console.log(response.features[0].center[0]); //long
           // console.log(response.features[0].center[1]); //lat
           const newLocation = {
-            type: "Feature",
-            properties: {
-              description: "<strong>" + title + "</strong><p>" + desc + "</p>",
-            },
-            geometry: {
-              type: "Point",
-              coordinates: [
-                response.features[0].center[0],
-                response.features[0].center[1],
-              ],
-            },
+            title: title,
+            desc: desc,
+            long: response.features[0].center[0],
+            lat: response.features[0].center[1],
           };
-          locArr.push(newLocation);
-          titlesArr.push(title);
-          console.log(titlesArr)
-          newMap(title);
+          newMap(newLocation);
         });
-      });
-      function newMap(title) {
+        
+      function newMap(newLocation) {
         map.loadImage("https://i.imgur.com/MK4NUzI.png", function (
           error,
           image
@@ -103,13 +98,29 @@
           map.addImage("custom-marker", image);
           map.addLayer({
             maxzoom: 15,
-            id: title,
+            id: newLocation.title,
             type: "symbol",
             source: {
               type: "geojson",
               data: {
                 type: "FeatureCollection",
-                features: locArr,
+                features: [
+                  {
+                    type: "Feature",
+                    properties: {
+                      description:
+                        "<strong>" +
+                        newLocation.title +
+                        "</strong><p>" +
+                        newLocation.desc +
+                        "</p>",
+                    },
+                    geometry: {
+                      type: "Point",
+                      coordinates: [newLocation.long, newLocation.lat],
+                    },
+                  },
+                ],
               },
             },
             layout: {
@@ -122,12 +133,13 @@
         });
       }
 
-      map.on("click", "locations", function (e) {
+      for(i=0; i<titlesArr.length;i++){
+      map.on("click", titlesArr[i], function (e) {
         var coordinates = e.features[0].geometry.coordinates.slice();
         var description = e.features[0].properties.description;
 
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
 
         new mapboxgl.Popup()
@@ -136,13 +148,17 @@
           .addTo(map);
       });
 
-      map.on("mouseenter", "locations", function () {
+      map.on("mouseenter", titlesArr[i], function () {
         map.getCanvas().style.cursor = "pointer";
       });
 
-      map.on("mouseleave", "locations", function () {
+      map.on("mouseleave", titlesArr[i], function () {
         map.getCanvas().style.cursor = "";
       });
+      } 
+      });
+
+      
     </script>
   </body>
 </html>
