@@ -1,0 +1,29 @@
+function newMap() {
+
+    map.addSource("locations", {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: locArr,
+      },
+    });
+
+    map.loadImage("https://i.imgur.com/MK4NUzI.png", function (
+      error,
+      image
+    ) {
+      if (error) throw error;
+      map.addImage("custom-marker", image);
+      map.addLayer({
+        id: "locations",
+        type: "symbol",
+        source: "locations",
+        layout: {
+          "icon-image": "custom-marker",
+          "icon-allow-overlap": true,
+          "symbol-placement": "point",
+          "icon-anchor": "bottom",
+        },
+      });
+    });
+  }

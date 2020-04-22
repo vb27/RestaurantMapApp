@@ -1,0 +1,27 @@
+function newMap() {
+    map.loadImage("https://i.imgur.com/MK4NUzI.png", function (
+      error,
+      image
+    ) {
+      if (error) throw error;
+      map.addImage("custom-marker", image);
+      map.addLayer({
+        maxzoom: 15,
+        id: "locations",
+        type: "symbol",
+        source: {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: locArr,
+          },
+        },
+        layout: {
+          "icon-image": "custom-marker",
+          "icon-allow-overlap": true,
+          "symbol-placement": "point",
+          "icon-anchor": "bottom",
+        },
+      });
+    });
+  }
