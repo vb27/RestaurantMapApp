@@ -7,6 +7,9 @@ const PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
 const db = require("./models");
+const session =require("express-session");
+// var SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 
 
 // Sets up the Express app to handle data parsing
