@@ -5,8 +5,8 @@ USE user_db;
 CREATE TABLE users
 (
 	userId INT NOT NULL AUTO_INCREMENT, 
-	userName VARCHAR(10) NOT NULL,
-	userPassword VARCHAR(10),
+	username VARCHAR(10) NOT NULL,
+	password VARCHAR(10),
     CONSTRAINT fk_user
 	PRIMARY KEY (userId)
 );

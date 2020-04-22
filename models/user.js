@@ -1,5 +1,7 @@
-module.exports = function (sequelize, DataTypes) {
-    const User = sequelize.define("User", {
+const bcrypt = require("bcrypt");
+
+module.exports = function (sequelize, DataTypes) { 
+    const User = sequelize.define("user", {
         // Giving the Author model a name of type STRING
 
 
@@ -8,21 +10,27 @@ module.exports = function (sequelize, DataTypes) {
             autoIncrement: true,
             primaryKey: true
         },
-        userName: {
+        username: {
             type: DataTypes.STRING,
+            unique: true,
             allowNull: false,
-            validate: {
-                len: [4, 16]
-            }
+
         },
-        userPassword: {
+        password: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [6, 12]
+                len: [8]
             }
         }
     });
+
+    // User.beforeCreate(function (user) {
+    //     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+
+    // });
+
+
 
     User.associate = function (models) {
         // Associating Author with Posts
@@ -33,6 +41,4 @@ module.exports = function (sequelize, DataTypes) {
     };
 
     return User;
-
-    
 };
