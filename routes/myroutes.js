@@ -15,6 +15,7 @@ router.get("/", function(req, res) {
 });
 
 router.post("/signup", function (req, res) {
+    console.log("reg.body:",req.body);
     db.user.create({
         username: req.body.username,
         password: req.body.password
@@ -37,6 +38,7 @@ router.get("/login", function (req, res) {
 });
 
 router.post("/login", function (req, res) {
+    console.log(req.body);
     db.User.findOne({
         where: {
             username: req.body.username
