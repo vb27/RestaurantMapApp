@@ -1,4 +1,4 @@
-function newMap() {
+function newMap(newLocation) {
     map.loadImage("https://i.imgur.com/MK4NUzI.png", function (
       error,
       image
@@ -7,13 +7,31 @@ function newMap() {
       map.addImage("custom-marker", image);
       map.addLayer({
         maxzoom: 15,
-        id: "locations",
+        id: this.name,
         type: "symbol",
         source: {
           type: "geojson",
           data: {
             type: "FeatureCollection",
-            features: locArr,
+            features: [
+              {
+                type: "Feature",
+                properties: {
+                  description:
+                    "<strong>" +
+                    this.name +
+                    "</strong><p>" +
+                    this.review +
+                    "</p></b>
+                    <img src=`this.image`/>
+                    <p>+this.address+</p>",
+                },
+                geometry: {
+                  type: "Point",
+                  coordinates: [this.cords],
+                },
+              },
+            ],
           },
         },
         layout: {
