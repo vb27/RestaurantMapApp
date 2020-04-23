@@ -26,6 +26,9 @@
         bottom: 0;
         width: 100%;
       }
+      .address {
+        font-size: 8px;
+      }
     </style>
   </head>
   <body>
@@ -94,6 +97,7 @@
             desc: desc,
             long: response.features[0].center[0],
             lat: response.features[0].center[1],
+            address: response.features[0].place_name
           };
           // giving the object to the newMap function
           newMap(newLocation);
@@ -124,7 +128,7 @@
                           newLocation.title +
                           "</strong><p>" +
                           newLocation.desc +
-                          "</p>",
+                          "</p><p class='address'>"+newLocation.address+"</p>",
                       },
                       geometry: {
                         type: "Point",
