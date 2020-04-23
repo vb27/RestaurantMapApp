@@ -35,20 +35,16 @@ router.get("/logout", function (req, res) {
 
 
 
-router.post("/locations", function (req, res) {
-    console.log("reg.body:", req.body);
+router.post("/locations", function (req, res) {    
     db.locations.create({
         name: req.body.name,
         review: req.body.review,
         image: req.body.image,
-        address: req.body.address,
-
-
-
+        address: req.body.address
 
     }).then(newLocation => {
         // res.json(newLocation)
-        res.redirect();
+        res.redirect("/");
     }).catch(err => {
         console.log(err);
         res.status(500).json(err);
@@ -106,17 +102,6 @@ router.post("/login", function (req, res) {
 // router.get("/readsessions", function (req, res) {
 //     res.json(req.session);
 // });
-
-
-
-router.post("/api/newuser", function (req, res) {
-    db.User.create({
-        userName: req.body.userName,
-        userPassword: req.body.userPass
-    }).then(function () {
-        res.redirect("/");
-    });
-});
 
 
 router.get("/login", function (req, res) {

@@ -1,6 +1,6 @@
 <div class="container">
 
-   <form action="/locations" method="POST" id="content-form">
+   <form id="content-form">
 
       <label for="name">name</label>
       <input type="text" id="name" name="name" />
@@ -9,17 +9,13 @@
       <label for="review">review</label>
       <input type="text" id="review" name="review" />
 
-       <label for="image">Upload image</label>
-      <input type="text" id="image" name="image" />
-
-        <label for="address">Adress</label>
+      <label for="address">Adress</label>
       <input type="text" id="address" name="address" />
+          
+      <label for="image">Upload image</label>
+      <input type="file" id="placeImg" name="placeImg">
 
-
-      
-      <label for="contentDesc">description</label>
-      <input type="text" id="contentDescription" name="contentDescription" />
-      <input id="find-content" type="submit" value="content Search" />
+      <input id="btnSave" name="btnSave" type="submit" value="Save" />
     </form>
     
 

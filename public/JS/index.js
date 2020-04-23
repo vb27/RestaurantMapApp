@@ -1,76 +1,44 @@
-// $(function () {
-//             ​
-//             $("#btnLogin").on("click", (event) => {
-//                 event.preventDefault();​
-//                 const userN = $("#userName").val().trim();
-//                 const userP = $("#userPass").val().trim();​
-//                 // connect to database check id
-//                 if (userN != "" && userP != "") {
-//                     const loginUser = {
-//                         userName: userN,
-//                         userPass: userP
-//                     }​
-//                     $.ajax("/api/check", {
-//                         type: "GET",
-//                         data: loginUser
-//                     }).then()
-//                 }​
-//             }); // End of Loginbutton
-//             ​
-//             $("#btnRegister").on("click", (event) => {
-//                 event.preventDefault();​
-//                 const userN = $("#userName").val().trim();
-//                 const userP = $("#userPass").val().trim();​
-//                 //validate
-//                 if (userN != "" && userP != "") {
-//                     const newUser = {
-//                         userName: userN,
-//                         userPass: userP
-//                     }​
-//                     $.ajax("/signup", {
-//                         type: "POST",
-//                         data: newUser
-//                     }).then(() => {
-//                         alert("Register success");
-//                     })​
-//                 }​
-//             }); // END of Registerbutton
-//             ​
-//             $("#btnSearchLocation").on("click", (event) => {
-//                 event.preventDefault();​
-//                 const userSearch = $("#userSearch").val().trim();
+$(function () {
 
-//                 // validate
-//                 if (userSearch != "") {
-//                     const mySearch = {
-//                         search: userSearch
-//                     }​
-//                     $.ajax("/api/searchlocation", {
-//                         type: "GET",
-//                         data: mySearch
-//                     }).then(() => {
+    $("#btnSave").on("click", async function (event) {
+        event.preventDefault();
+        const placeN = $("#name").val().trim();
+        const placeR = $("#review").val().trim();
+        const placeA = $("#address").val().trim();
+        let placeI = $("#placeImg")[0].files[0];  // get input value
 
-//                     })
-//                 }
-//             }); // END of searchLocation
-//             ​
-//             $("#btnSearchUser").on("click", (event) => {
-//                 event.preventDefault();​
-//                 const userSearch = $("#userSearch").val().trim();
+        // make object
+        const data = new FormData();
+        data.append("file", placeI);
 
-//                 // validate
-//                 if (userSearch != "") {
-//                     const mySearch = {
-//                         search: userSearch
-//                     }​
-//                     $.ajax("/api/searchuser", {
-//                         type: "GET",
-//                         data: mySearch
-//                     }).then(() => {
+        data.append("upload_preset", "bvomk4gv");
+        // upload file
+        const res = await fetch(
+            "https://api.cloudinary.com/v1_1/myfoodmap/image/upload",
+            {
+                method: "POST",
+                body: data
+            }
+        );
+        const file = await res.json();
+        console.log(file.url);
+        
+        if (placeN != "" && placeR != "") {
 
-//                     })
-//                 }
-//             }) // END of searchUser
-            
-//             ​
-//         }
+            const placeNameCon = {
+                name: placeN,
+                review: placeR,
+                image: file.url,
+                address: placeA                
+            }
+
+            $.ajax("/locations", {
+                type: "POST",
+                data: placeNameCon
+            }).then(() => {
+                console.log("Success");
+            })
+        } else { alert("Please fill up the blank space") }
+    })
+    
+});
