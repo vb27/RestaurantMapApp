@@ -32,7 +32,7 @@ $(function () {
                 address: placeA                
             }
 
-            $.ajax("/locations", {
+            $.ajax("/locations/user", {
                 type: "POST",
                 data: placeNameCon
             }).then(() => {

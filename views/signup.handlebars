@@ -1,14 +1,15 @@
 <div class="container">
 
-    <div class="loginSection">
-        <h3>Login</h3>
-        <form action="/login" method="POST">
+    <div class="signUnSection">
+        <h3>Sign Up</h3>
+        <form action="/signup" method="POST">
             <input type="text" id="username" name="username" placeholder="Username">
             <input type="password" id="password" name="password" placeholder="Password">
             {{!-- <input type="submit" value="Login" id="btnLogin"> --}}
             <input type="submit" value="Register" id="btnRegister">
         </form>
-        <p>New user?<a href="/signup">signup</a> here!</p>
+
+        <p>Already a user? <a href="/login">login</a> here!</p>
 
 
      <!-- END of loginSection -->
@@ -16,5 +17,3 @@
     </div>
 
 </div> <!-- END of container -->
-
-

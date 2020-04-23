@@ -10,7 +10,7 @@
          name: {
              unique: true,
              type: DataTypes.STRING,
-             allowNull: false,
+            //  allowNull: false,
              validate: {
                  len: [1]
              }
@@ -25,6 +25,8 @@
              type: DataTypes.STRING,
          },
          cords: {
+
+            
              type: DataTypes.GEOMETRY('POINT'),
              //  allowNull: false,
              validate: {
