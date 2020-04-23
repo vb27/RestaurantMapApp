@@ -6,23 +6,23 @@
              autoIncrement: true,
              primaryKey: true
          },
-         locationName: {
-             type: DataTypes.STRING,
-             allowNull: false,
-
-         },
-         locationTitle: {
-             type: DataTypes.STRING,
+  
+         name: {
              unique: true,
+             type: DataTypes.STRING,
              allowNull: false,
-             // validate:{
-             //     notNull:{args:true,msg: "Enter"}
-             // }
+             validate: {
+                 len: [1]
+             }
          },
-         locationDescription: {
+         review: {
              type: DataTypes.TEXT,
-             allowNull: false,
-
+         },
+         image: {
+             type: DataTypes.STRING,
+         },
+         address: {
+             type: DataTypes.STRING,
          },
          cords: {
              type: DataTypes.GEOMETRY('POINT'),
@@ -35,7 +35,7 @@
      Location.associate = function (models) {
          // Associating Location with Content
          // When an Location is deleted, also delete any associated Content
-         Location.hasMany(models.content, {
+         Location.belongsTo(models.user, {
              onDelete: "cascade"
          });
      };
