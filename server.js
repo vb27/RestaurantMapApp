@@ -1,5 +1,6 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const dotenv = require('dotenv').config({path: __dirname + '/.env'}
 
 const app = express();
 
