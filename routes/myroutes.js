@@ -28,7 +28,7 @@ router.post("/signup", function (req, res) {
             username: newUser.username,
             id: newUser.id
         };
-        res.redirect("locations/user");
+        res.redirect("/locations/user");
 
 
     }).catch(err => {

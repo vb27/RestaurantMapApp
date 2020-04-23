@@ -10,7 +10,51 @@ $(function () {
     zoom: 7,
     maxzoom: 7,
   });
-
+  map.on("load", function(){
+    map.loadImage("https://i.imgur.com/MK4NUzI.png", function (
+      error,
+      image
+    ) {
+      if (error) throw error;
+      map.addImage("custom-marker", image);
+      map.addLayer({
+        maxzoom: 15,
+        id: this.name,
+        type: "symbol",
+        source: {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                properties: {
+                  description:
+                    "<strong>" +
+                    this.name +
+                    `</strong></br><img class= "image"src= "${this.image}"/><p>` +
+                    this.review +
+                    "</p><p class='address'>" +
+                    this.address +
+                    "</p>",
+                },
+                geometry: {
+                  type: "Point",
+                  coordinates: [this.long, this.lat],
+                },
+              },
+            ],
+          },
+        },
+        layout: {
+          "icon-image": "custom-marker",
+          "icon-allow-overlap": true,
+          "symbol-placement": "point",
+          "icon-anchor": "bottom",
+        },
+      });
+    });
+  })
   $("#btnSave").on("click", async function (event) {
     event.preventDefault();
     const placeN = $("#name").val().trim();
@@ -33,7 +77,14 @@ $(function () {
       }
     );
     const file = await res.json();
+
     console.log(file.url)
+
+      for (i=0; i<namesArr.length; i++){
+        if (placeN === namesArr[i])
+        alert("Title needs to be unique!")
+        return;
+      }
 
     namesArr.push(placeN);
     // api URL and ajax call
@@ -69,7 +120,7 @@ $(function () {
             // lat: response.features[0].center[1]
         };
        
-        $.ajax("/locations", {
+        $.ajax("/locations/user", {
             type: "POST",
             data: placeNameCon,
         }).then(() => {
