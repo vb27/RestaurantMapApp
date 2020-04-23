@@ -25,9 +25,7 @@ router.get("/locations", function (req, res) {
     res.render("locations");
 });
 
-router.get("/locations/content", function (req, res) {
-    res.render("content");
-});
+
 
 router.get("/logout", function (req, res) {
     req.session.destroy(function (err) {
@@ -40,47 +38,23 @@ router.get("/logout", function (req, res) {
 router.post("/locations", function (req, res) {
     console.log("reg.body:", req.body);
     db.locations.create({
-        locationName: req.body.locationName,
-        locationTitle: req.body.locationTitle,
-        locationDescription: req.body.locationDescription
-
-
-    }).then(newLocation => {
-        res.json(newLocation);
-        // req.session.location = {
-        //     username: newUser.username,
-        //     id: newUser.id
-        // };
-        // res.send("logged in!")
-
-    }).catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    });
-});
-
-router.post("/locations/content", function (req, res) {
-    console.log("reg.body:", req.body);
-    db.content.create({
         name: req.body.name,
         review: req.body.review,
         image: req.body.image,
-        address: req.body.address
+        address: req.body.address,
+
+
 
 
     }).then(newLocation => {
-        res.json(newLocation);
-        // req.session.location = {
-        //     username: newUser.username,
-        //     id: newUser.id
-        // };
-        // res.send("logged in!")
-
+        // res.json(newLocation)
+        res.redirect();
     }).catch(err => {
         console.log(err);
         res.status(500).json(err);
     });
 });
+
 
 
 
@@ -110,7 +84,7 @@ router.post("/signup", function (req, res) {
 
 router.post("/login", function (req, res) {
     console.log(req.body);
-    db.User.findOne({
+    db.user.findOne({
         where: {
             username: req.body.username
         }
@@ -121,9 +95,10 @@ router.post("/login", function (req, res) {
                 id: dbUser.id
             };
             // res.send("logged in!")
-            res.redirect('/login')
+            res.redirect('/locations');
         } else {
             res.send("not logged in");
+            res.redirect('/signup');
         }
     });
 });
