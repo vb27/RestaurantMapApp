@@ -6,11 +6,11 @@
              autoIncrement: true,
              primaryKey: true
          },
-  
+
          name: {
              unique: true,
              type: DataTypes.STRING,
-            //  allowNull: false,
+             //  allowNull: false,
              validate: {
                  len: [1]
              }
@@ -24,15 +24,19 @@
          address: {
              type: DataTypes.STRING,
          },
-         cords: {
+         lat: {
 
-            
-             type: DataTypes.GEOMETRY('POINT'),
-             //  allowNull: false,
-             validate: {
-                 isFloat: true
-             }
-         },
+
+             type: DataTypes.DECIMAL(10, 4),
+
+
+             long: {
+
+
+                 type: DataTypes.DECIMAL(10, 4),
+
+             },
+         }
      });
      Location.associate = function (models) {
          // Associating Location with Content
