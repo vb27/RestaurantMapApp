@@ -68,7 +68,7 @@ $(function () {
             // long: response.features[0].center[0]
             // lat: response.features[0].center[1]
         };
-        
+       
         $.ajax("/locations", {
             type: "POST",
             data: placeNameCon,

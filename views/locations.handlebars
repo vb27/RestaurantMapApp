@@ -1,9 +1,13 @@
 <div class="container">
 
+
+   <form action="/locations/user" method="POST" id="content-form">
+
    <form id="content-form">
       
       <label for="address">Address</label>
       <input type="text" id="address" name="address" />
+
 
       <label for="name">name</label>
       <input type="text" id="name" name="name" />
@@ -11,6 +15,7 @@
 
       <label for="review">review</label>
       <input type="text" id="review" name="review" />
+
 
           
       <label for="image">Upload image</label>
@@ -23,7 +28,7 @@
    
     <aside> 
     <h3>History</h3>
-    {{#each place}}
+    {{#each location}}
     {{name}}
     {{/each}}
 
