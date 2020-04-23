@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    const Content = sequelize.define("Content", {
+    const Content = sequelize.define("content", {
         // Giving the Author model a name of type STRING
 
 
@@ -29,7 +29,7 @@ module.exports = function (sequelize, DataTypes) {
     Content.associate = function (models) {
         // Associating Location with Content
         // When an Location is deleted, also delete any associated Content
-        Content.belongsTo(models.Location, {
+        Content.belongsTo(models.locations, {
             foreignKey: { allowNull: false }
         });
     };
