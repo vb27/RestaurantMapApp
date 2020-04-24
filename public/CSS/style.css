@@ -1,6 +1,11 @@
 body {
     margin: 0;
     padding: 0;
+    /* background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%, rgba(250,221,228,1) 100%); */
+    background: black;
+
+    font-family: 'Bree Serif', serif;
 }
 
 #map {
@@ -23,3 +28,25 @@ body {
 .image {
     width: 150px;
 }
+
+.container {
+
+}
+
+.gradientBlack {
+    background: rgb(255,255,255);
+background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%, rgba(250,221,228,1) 100%);
+
+}
+
+.wrapperIMG {
+    height: 150px;
+    width: 100%;
+}
+
+.banner {
+    width: 100%;
+    height: 150px;
+}
+
+

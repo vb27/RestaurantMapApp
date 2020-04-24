@@ -1,20 +1,43 @@
 <div class="container">
 
-    <div class="loginSection">
-        <h3>Login</h3>
-        <form action="/login" method="POST">
-            <input type="text" id="username" name="username" placeholder="Username">
-            <input type="password" id="password" name="password" placeholder="Password">
-            {{!-- <input type="submit" value="Login" id="btnLogin"> --}}
-            <input type="submit" value="Register" id="btnRegister">
-        </form>
-        <p>New user?<a href="/signup">signup</a> here!</p>
+    <div class="ui grid container">
+        <div class="column ui black inverted segment">
+            <h2 class="ui center aligned header ui green inverted header">Login to your account</h2>
+            <form class="ui form" action="/login" method="POST">
 
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" id="username" name="username" placeholder="Username">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" id="password" name="password" placeholder="Password">
+                    </div>
+                </div>
+                <input type="submit" value="Login" id="btnLogin" class="ui fluid large inverted green submit button">
+            </form>
 
-     <!-- END of loginSection -->
+            <div class="ui message fluid center aligned ui olive">
+                <p>New to us? <a href="/signup">Sign Up</a></p>
+            </div>
 
+            <div class="ui message fluid center aligned ui olive">
+            <h3>Tuturial :</h3>
+            <ol >
+                <li>Login/Register</li>
+                <li>Enter address/name of location</li>
+                <li>Enter title/name</li>
+                <li>Enter your description</li>
+                <li>Add an image</li>
+                <li>Save</li>
+                <li>Click on markers on map to view posts</li>
+            </ol>            
+            </div>
+            
+        </div>
     </div>
 
 </div> <!-- END of container -->
-
-
