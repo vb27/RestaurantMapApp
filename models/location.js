@@ -2,7 +2,6 @@
      const Location = sequelize.define("locations", {
          // Giving the Author model a name of type STRING
          name: {
-             unique: true,
              type: DataTypes.STRING,
              //  allowNull: false,
              validate: {

@@ -67,20 +67,20 @@ router.get("/locations/user", function (req, res) {
     res.render("locations")
 })
 
-// router.get("/locations/saved", function (req, res){
-//     db.locations.findAll({
-//         where:{
-//         userId: req.session.user.id
-//         }
+router.get("/locations/saved", function (req, res){
+    console.log("hi");
+    db.locations.findAll({
+        where:{
+        userId: req.session.user.id
+        }
+    }).then(function(savedLoc){
+        res.json(savedLoc)
 
-//     }).then(function(savedLoc){
-//         res.json(savedLoc)
-
-//     }).catch(err => {
-//         console.log(err);
-//         res.status(500).json(err);
-//     });
-// })
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+})
 
 router.post("/locations/user", function (req, res) {
     db.locations.create({
@@ -93,14 +93,12 @@ router.post("/locations/user", function (req, res) {
         userId: req.session.user.id
 
     }).then(function(){
-        res.redirect("/locations/user");
-        
+        res.send("created")
     }).catch(err => {
         console.log(err);
         res.status(500).json(err);
     });
 });
-
 
 router.get("/logout", function (req, res) {
     req.session.destroy(function (err) {
