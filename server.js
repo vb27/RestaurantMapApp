@@ -2,7 +2,6 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const dotenv = require('dotenv').config({path: __dirname + '/.env'});
 
-
 const app = express();
 
 const PORT = process.env.PORT || 8080;
@@ -45,7 +44,7 @@ let routes = require("./routes/myroutes.js");
 app.use(routes);
 
 
-db.sequelize.sync({ force: true}).then(function() {
+db.sequelize.sync({ force: false }).then(function() {
   app.listen(PORT, function() {
     console.log("App listening on http://localhost:" + PORT);
   });

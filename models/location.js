@@ -2,7 +2,6 @@
      const Location = sequelize.define("locations", {
          // Giving the Author model a name of type STRING
          name: {
-             unique: true,
              type: DataTypes.STRING,
              primaryKey: true,
              //  allowNull: false,
@@ -25,18 +24,11 @@
          },
 
          lat: {
-
-
              type: DataTypes.DECIMAL(10, 4),
          },
-
          long: {
-
-
-             type: DataTypes.DECIMAL(10, 4),
-
-         },
-
+            type: DataTypes.DECIMAL(10, 4),
+        },
      });
      Location.associate = function (models) {
          // Associating Location with Content
