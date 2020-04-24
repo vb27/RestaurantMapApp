@@ -3,35 +3,36 @@
 
    <form action="/locations/user" method="POST" id="content-form">
 
-   <form id="content-form">
+      <form id="content-form">
+
+         <label for="address">Address</label>
+         <input type="text" id="address" name="address" />
+
+
+         <label for="name">name</label>
+         <input type="text" id="name" name="name" />
+
+
+         <label for="review">review</label>
+         <input type="text" id="review" name="review" />
+
+
+
+         <label for="image">Upload image</label>
+         <input type="file" id="placeImg" name="placeImg">
+
+         <input id="btnSave" name="btnSave" type="submit" value="Save" />
+      </form>
       
-      <label for="address">Address</label>
-      <input type="text" id="address" name="address" />
+      
+      <aside>
+         <h3>History</h3>
+         {{#each location}}
+         {{name}}
+         {{/each}}
 
 
-      <label for="name">name</label>
-      <input type="text" id="name" name="name" />
-
-
-      <label for="review">review</label>
-      <input type="text" id="review" name="review" />
-
-
-          
-      <label for="image">Upload image</label>
-      <input type="file" id="placeImg" name="placeImg">
-
-      <input id="btnSave" name="btnSave" type="submit" value="Save" />
-    </form>
-    
-    <aside> 
-    <h3>History</h3>
-    {{#each location}}
-    {{name}}
-    {{/each}}
-
- 
-    </aside><!-- END of sidbar -->
+      </aside><!-- END of sidbar -->
 
 
 </div> <!-- END of container -->

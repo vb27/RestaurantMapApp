@@ -1,6 +1,5 @@
 $(function () {
   const namesArr = [];
-
   mapboxgl.accessToken =
     "pk.eyJ1IjoidmIyNyIsImEiOiJjazk4cjdteTgwNDNiM21xdHQ1Y3BtbWhyIn0.oyEQCIxSrbYI1VZ208kcPw";
   var map = new mapboxgl.Map({
@@ -10,6 +9,7 @@ $(function () {
     zoom: 7,
     maxzoom: 7,
   });
+  //===============================================================================
   map.on("load", function(){
     map.loadImage("https://i.imgur.com/MK4NUzI.png", function (
       error,
@@ -55,6 +55,7 @@ $(function () {
       });
     });
   })
+
   $("#btnSave").on("click", async function (event) {
     event.preventDefault();
     const placeN = $("#name").val().trim();
@@ -110,14 +111,16 @@ $(function () {
       };
       // giving the object to the newMap function
       newMap(newLocation);
+      console.log(response.features[0].center[0])
+      console.log(parseInt(response.features[0].center[0]))
       if (placeN != "" && placeR != "") {
         const placeNameCon = {
             name: placeN,
             review: placeR,
             image: file.url,
             address: response.features[0].place_name,
-            // long: response.features[0].center[0]
-            // lat: response.features[0].center[1]
+            long: response.features[0].center[0],
+            lat: response.features[0].center[1]
         };
        
         $.ajax("/locations/user", {

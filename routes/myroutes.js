@@ -51,7 +51,7 @@ router.post("/login", function (req, res) {
         if (bcrypt.compareSync(req.body.password, dbUser.password)) {
             req.session.user = {
                 username: dbUser.username,
-                id: dbUser.id
+                id: dbUser.userId
             };
             // res.send("logged in!")
             res.redirect('/locations/user');
@@ -65,9 +65,18 @@ router.post("/login", function (req, res) {
     });
 });
 
-
 router.get("/locations/user", function (req, res) {
     res.render("locations");
+    db.locations.findAll({
+        where:{
+            userId: req.sessioncookie.user.id
+        }
+    }).then(function(res){
+        console.log(res)
+    }).catch(err => {
+        console.log(err);
+        res.status(404).json(err);
+    });
 });
 
 router.post("/locations/user", function (req, res) {
@@ -75,7 +84,10 @@ router.post("/locations/user", function (req, res) {
         name: req.body.name,
         review: req.body.review,
         address: req.body.address,
-        image: req.body.image
+        image: req.body.image,
+        long: req.body.long,
+        lat: req.body.lat,
+        userId: req.sessioncookie.user.id
 
     }).then(newLocation => {
         // res.json(newLocation)
@@ -89,6 +101,7 @@ router.post("/locations/user", function (req, res) {
         res.status(500).json(err);
     });
 });
+
 
 
 

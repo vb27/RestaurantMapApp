@@ -25,18 +25,11 @@
              type: DataTypes.STRING,
          },
          lat: {
-
-
              type: DataTypes.DECIMAL(10, 4),
-
-
-             long: {
-
-
-                 type: DataTypes.DECIMAL(10, 4),
-
-             },
-         }
+         },
+         long: {
+            type: DataTypes.DECIMAL(10, 4),
+        },
      });
      Location.associate = function (models) {
          // Associating Location with Content
