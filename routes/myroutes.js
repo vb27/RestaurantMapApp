@@ -11,7 +11,6 @@ router.get("/", function (req, res) {
     res.redirect("signup");
 });
 
-
 router.get("/signup", function (req, res) {
     res.render("signup");
 });
@@ -26,7 +25,7 @@ router.post("/signup", function (req, res) {
 
         req.session.user = {
             username: newUser.username,
-            id: newUser.id
+            id: newUser.userId
         };
         res.redirect("/locations/user");
 
@@ -42,7 +41,6 @@ router.get("/login", function (req, res) {
 });
 
 router.post("/login", function (req, res) {
-    console.log(req.body);
     db.user.findOne({
         where: {
             username: req.body.username
@@ -57,7 +55,7 @@ router.post("/login", function (req, res) {
             res.redirect('/locations/user');
         } else {
             res.redirect('/signup');
-            
+
         }
     }).catch(err => {
         console.log(err);
@@ -66,18 +64,23 @@ router.post("/login", function (req, res) {
 });
 
 router.get("/locations/user", function (req, res) {
-    res.render("locations");
-    db.locations.findAll({
-        where:{
-            userId: req.sessioncookie.user.id
-        }
-    }).then(function(res){
-        console.log(res)
-    }).catch(err => {
-        console.log(err);
-        res.status(404).json(err);
-    });
-});
+    res.render("locations")
+})
+
+// router.get("/locations/saved", function (req, res){
+//     db.locations.findAll({
+//         where:{
+//         userId: req.session.user.id
+//         }
+
+//     }).then(function(savedLoc){
+//         res.json(savedLoc)
+
+//     }).catch(err => {
+//         console.log(err);
+//         res.status(500).json(err);
+//     });
+// })
 
 router.post("/locations/user", function (req, res) {
     db.locations.create({
@@ -87,23 +90,16 @@ router.post("/locations/user", function (req, res) {
         image: req.body.image,
         long: req.body.long,
         lat: req.body.lat,
-        userId: req.sessioncookie.user.id
+        userId: req.session.user.id
 
-    }).then(newLocation => {
-        // res.json(newLocation)
+    }).then(function(){
         res.redirect("/locations/user");
-        console.log("image:", newLocation.image);
-
-
-        console.log("New Location:", newLocation.image);
+        
     }).catch(err => {
         console.log(err);
         res.status(500).json(err);
     });
 });
-
-
-
 
 
 router.get("/logout", function (req, res) {
@@ -112,10 +108,6 @@ router.get("/logout", function (req, res) {
     });
 });
 
-
-// router.get("/readsessions", function (req, res) {
-//     res.json(req.session);
-// });
 router.get("/readsessions", function (req, res) {
     res.json(req.session);
 });
@@ -125,7 +117,5 @@ router.get("/logout", function (req, res) {
         res.json('logged out');
     });
 });
-
-
 
 module.exports = router;
