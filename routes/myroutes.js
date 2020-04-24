@@ -39,6 +39,7 @@ router.post("/signup", function (req, res) {
 });
 
 
+
 // Login
 router.get("/login", function (req, res) {
     res.render("index");
@@ -54,13 +55,13 @@ router.post("/login", function (req, res) {
         if (bcrypt.compareSync(req.body.password, dbUser.password)) {
             req.session.user = {
                 username: dbUser.username,
-                id: dbUser.id
+                id: dbUser.userId
             };
             // res.send("logged in!")
             res.redirect('/locations/user');
         } else {
             res.redirect('/signup');
-            
+
         }
     }).catch(err => {
         console.log(err);
@@ -69,16 +70,43 @@ router.post("/login", function (req, res) {
 });
 
 
+
 router.get("/locations/user", function (req, res) {
-    res.render("locations");
+    res.render("locations")
+    console.log(req.session.user);
 });
+
+router.get("/locations/user", function (req, res) {
+    db.locations.findAll({
+        where:{
+        userId: res.session.user.id
+        }
+
+    }).then(function(res){
+        // res.json(newLocation)
+        console.log(res);
+
+        // console.log("image:", newLocation.image);
+        // console.log("New Location:", newLocation.image);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
+
+
+
+
+
+
 
 router.post("/locations/user", function (req, res) {
     db.locations.create({
         name: req.body.name,
         review: req.body.review,
         address: req.body.address,
-        image: req.body.image
+        image: req.body.image,
+        userId: res.session.user.id
 
     }).then(newLocation => {
         // res.json(newLocation)
@@ -103,12 +131,13 @@ router.get("/logout", function (req, res) {
 });
 
 
-// router.get("/readsessions", function (req, res) {
-//     res.json(req.session);
-// });
+
 router.get("/readsessions", function (req, res) {
     res.json(req.session);
+    console.log(req.session.user);
 });
+
+
 
 router.get("/logout", function (req, res) {
     req.session.destroy(function (err) {
