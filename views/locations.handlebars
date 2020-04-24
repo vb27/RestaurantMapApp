@@ -1,41 +1,43 @@
 <div class="container">
 
 
-   <form action="/locations/user" method="POST" id="content-form" class="">
+   <form id="content-form ui form">
 
-   <form id="content-form">
-      
-      <label for="address">Address</label>
-      <input type="text" id="address" name="address" />
+      <label for="address" class="ui red basic label">Address
+      <input type="text" id="address" name="address" /></label>
 
 
-      <label for="name">name</label>
-      <input type="text" id="name" name="name" />
+      <label for="name" class="ui red basic label">Name
+      <input type="text" id="name" name="name" /></label>
 
 
-      <label for="review">review</label>
-      <input type="text" id="review" name="review" />
+      <label for="review" class="ui red basic label">Review
+      <input type="text" id="review" name="review" /></label>
 
 
-          
-      <label for="image">Upload image</label>
-      <input type="file" id="placeImg" name="placeImg">
 
-      <input id="btnSave" name="btnSave" type="submit" value="Save" />
-    </form>
-    
+      <label for="image" class="ui red basic label">Upload image
+      <input type="file" id="placeImg" class="ui inverted orange button" name="placeImg"></label>
 
-   
-    <aside> 
-    <h3>History</h3>
-    {{#each location}}
-    {{name}}
-    {{/each}}
-
- 
-    </aside><!-- END of sidbar -->
+      <input id="btnSave" name="btnSave" class="ui inverted large red button" type="submit" value="Save" />
+   </form>
 
 
 </div> <!-- END of container -->
 
-<div id="map"></div>
+<div class="ui grid stackable container wrapperMap">
+   <div class="three column row">
+
+         <div class="ten wide column">
+            <div id="map"></div>
+         </div>
+
+         <div class="four wide column ui message myHistory ui center aligned header ">
+            <h3>History</h3>
+            {{#each location}}
+            {{name}}
+            {{/each}}
+         </div>
+
+   </div>
+</div>
