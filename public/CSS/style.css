@@ -1,12 +1,24 @@
 body {
     margin: 0;
-    padding: 0;
+    padding: 0;   
+    background: black;
+    font-family: 'Bree Serif', serif;
+}
+
+.wrapperMap {
+    width: 100%;
+    height: 70%;    
+    position: relative;
+}
+
+.container {
+    margin-bottom: 2%;
 }
 
 #map {
     position: absolute;
-    top: 100px;
-    bottom: 0;
+    top: 0;
+    bottom: 0;    
     width: 100%;
 }
 
@@ -23,3 +35,21 @@ body {
 .image {
     width: 150px;
 }
+
+.gradientBlack {
+    background: rgb(255,255,255);
+background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%, rgba(250,221,228,1) 100%);
+
+}
+
+.wrapperIMG {
+    height: 150px;
+    width: 100%;
+}
+
+.banner {
+    width: 100%;
+    height: 150px;
+}
+
+

@@ -7,8 +7,9 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 
 
+// First page (login)
 router.get("/", function (req, res) {
-    res.redirect("signup");
+    res.render("index");
 });
 
 router.get("/signup", function (req, res) {
@@ -36,6 +37,9 @@ router.post("/signup", function (req, res) {
     });
 });
 
+
+
+// Login
 router.get("/login", function (req, res) {
     res.render("index");
 });
@@ -108,7 +112,10 @@ router.get("/logout", function (req, res) {
 
 router.get("/readsessions", function (req, res) {
     res.json(req.session);
+    console.log(req.session.user);
 });
+
+
 
 router.get("/logout", function (req, res) {
     req.session.destroy(function (err) {

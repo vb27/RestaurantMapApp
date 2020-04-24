@@ -1,19 +1,47 @@
 <div class="container">
 
-    <div class="signUnSection">
-        <h3>Sign Up</h3>
-        <form action="/signup" method="POST">
-            <input type="text" id="username" name="username" placeholder="Username">
-            <input type="password" id="password" name="password" placeholder="Password">
-            {{!-- <input type="submit" value="Login" id="btnLogin"> --}}
-            <input type="submit" value="Register" id="btnRegister">
-        </form>
+    <div class="ui grid container">
+        <div class="column ui black inverted segment">
+            <h2 class="ui center aligned header ui green inverted header">Register</h2>
+            <form class="ui form" action="/signup" method="POST">
 
-        <p>Already a user? <a href="/login">login</a> here!</p>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" id="username" name="username" placeholder="Username">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" id="password" name="password" placeholder="Password">
+                    </div>
+                </div>
+                <input type="submit" value="Register" id="btnRegister" class="ui fluid large inverted green submit button">
+            </form>
 
+            <div class="ui message fluid center aligned ui olive">
+                <p>Already a user? <a href="/login">Login</a></p>
+            </div>
+            
+            <div class="ui message fluid center aligned ui olive">
+            <h3>Tuturial :</h3>
+            <ol >
+                <li>Login/Register</li>
+                <li>Enter address/name of location</li>
+                <li>Enter title/name</li>
+                <li>Enter your description</li>
+                <li>Add an image</li>
+                <li>Save</li>
+                <li>Click on markers on map to view posts</li>
+            </ol>            
+            </div>
 
-     <!-- END of loginSection -->
-
+        </div>
     </div>
+
+
+
+
 
 </div> <!-- END of container -->
