@@ -69,31 +69,11 @@ $(function () {
         });
         // making sure that the array has names of the old database
         namesArr.push(savedLoc[i].name);
+        console.log(savedLoc[i]);
       }
-      // this loops though all the names in the the array so that it can make a click function for them all
-      for (let i = 0; i < namesArr.length; i++) {
-        map.on("click", namesArr[i], function (e) {
-          var coordinates = e.features[0].geometry.coordinates.slice();
-          var description = e.features[0].properties.description;
 
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-          }
-          // this is where the pop up is created
-          new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
-        });
-        // these last two on functions change the mouse from the hand to a pointer when they hover over a marker
-        map.on("mouseenter", namesArr[i], function () {
-          map.getCanvas().style.cursor = "pointer";
-        });
+      clickAble();
 
-        map.on("mouseleave", namesArr[i], function () {
-          map.getCanvas().style.cursor = "";
-        });
-      }
     });
   }
 
@@ -120,126 +100,134 @@ $(function () {
       }
     );
     const file = await res.json();
-      // this is an if statement to make sure that the name that the user inputs is unqiue (this allows other users the same name though)
-      let unique = namesArr.indexOf(placeN)
-      if (unique === -1){
-        namesArr.push(placeN);
-        // api URL and ajax call
-        var queryURL =
-          "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-          placeA +
-          ".json?proximity=-122.27995,47.88047&access_token=pk.eyJ1IjoidmIyNyIsImEiOiJjazk4cjdteTgwNDNiM21xdHQ1Y3BtbWhyIn0.oyEQCIxSrbYI1VZ208kcPw";
-    
-        $.ajax({
-          url: queryURL,
-          method: "GET",
-        }).then(function (response) {
-          // creating an object with all of the users info
-          const newLocation = {
+    // this is an if statement to make sure that the name that the user inputs is unqiue (this allows other users the same name though)
+    let unique = namesArr.indexOf(placeN)
+    if (unique === -1) {
+      namesArr.push(placeN);
+      // api URL and ajax call
+      var queryURL =
+        "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+        placeA +
+        ".json?proximity=-122.27995,47.88047&access_token=pk.eyJ1IjoidmIyNyIsImEiOiJjazk4cjdteTgwNDNiM21xdHQ1Y3BtbWhyIn0.oyEQCIxSrbYI1VZ208kcPw";
+
+      $.ajax({
+        url: queryURL,
+        method: "GET",
+      }).then(function (response) {
+        // creating an object with all of the users info
+        const newLocation = {
+          name: placeN,
+          review: placeR,
+          long: response.features[0].center[0],
+          lat: response.features[0].center[1],
+          address: response.features[0].place_name,
+          image: file.url,
+        };
+        // giving the object to the newMap function
+        newMap(newLocation);
+
+        // if statement to make sure that the name and review fields arent empty
+        if (placeN != "" && placeR != "") {
+          const placeNameCon = {
             name: placeN,
             review: placeR,
+            image: file.url,
+            address: response.features[0].place_name,
             long: response.features[0].center[0],
             lat: response.features[0].center[1],
-            address: response.features[0].place_name,
-            image: file.url,
           };
-          // giving the object to the newMap function
-          newMap(newLocation);
-          
-          // if statement to make sure that the name and review fields arent empty
-          if (placeN != "" && placeR != "") {
-            const placeNameCon = {
-              name: placeN,
-              review: placeR,
-              image: file.url,
-              address: response.features[0].place_name,
-              long: response.features[0].center[0],
-              lat: response.features[0].center[1],
-            };
-            // creating the new location in the database
-            $.ajax("/locations/user", {
-              type: "POST",
-              data: placeNameCon,
-            }).then(() => {
-              console.log("Success");
-            });
-          } else {
-            alert("Please fill up the blank space");
-          }
-        });
-    
-        // newMap function makes a maker with the information from the ajax call (basically the same function for the load except it takes the data from the usr input)
-        function newMap(newLocation) {
-          map.loadImage("https://i.imgur.com/MK4NUzI.png", function (error, image) {
-            if (error) throw error;
-            map.addImage("custom-marker", image);
-            map.addLayer({
-              maxzoom: 15,
-              id: newLocation.name,
-              type: "symbol",
-              source: {
-                type: "geojson",
-                data: {
-                  type: "FeatureCollection",
-                  features: [
-                    {
-                      type: "Feature",
-                      properties: {
-                        description:
-                          "<strong>" +
-                          newLocation.name +
-                          `</strong></br><img class= "image"src= "${newLocation.image}"/><p>` +
-                          newLocation.review +
-                          "</p><p class='address'>" +
-                          newLocation.address +
-                          "</p>",
-                      },
-                      geometry: {
-                        type: "Point",
-                        coordinates: [newLocation.long, newLocation.lat],
-                      },
-                    },
-                  ],
+          // creating the new location in the database
+          $.ajax("/locations/user", {
+            type: "POST",
+            data: placeNameCon,
+          }).then(() => {
+            console.log("Success");
+          });
+        } else {
+          alert("Please fill up the blank space");
+        }
+      });
+
+      // this loops though all the names in the the array so that it can make a click function for them all
+      clickAble();
+
+    } else {
+      alert("Name needs to be unique!");
+
+    }
+  });
+
+
+  function clickAble() {
+    // this loops though all the names in the the array so that it can make a click function for them all
+    for (let i = 0; i < namesArr.length; i++) {
+      map.on("click", namesArr[i], function (e) {
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+        // this is where the pop up is created
+        new mapboxgl.Popup()
+          .setLngLat(coordinates)
+          .setHTML(description)
+          .addTo(map);
+      });
+      // these last two on functions change the mouse from the hand to a pointer when they hover over a marker
+      map.on("mouseenter", namesArr[i], function () {
+        map.getCanvas().style.cursor = "pointer";
+      });
+
+      map.on("mouseleave", namesArr[i], function () {
+        map.getCanvas().style.cursor = "";
+      });
+    }
+  }
+
+  // newMap function makes a maker with the information from the ajax call (basically the same function for the load except it takes the data from the usr input)
+  function newMap(newLocation) {
+    map.loadImage("https://i.imgur.com/MK4NUzI.png", function (error, image) {
+      if (error) throw error;
+      map.addImage("custom-marker", image);
+      map.addLayer({
+        maxzoom: 15,
+        id: newLocation.name,
+        type: "symbol",
+        source: {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                properties: {
+                  description:
+                    "<strong>" +
+                    newLocation.name +
+                    `</strong></br><img class= "image"src= "${newLocation.image}"/><p>` +
+                    newLocation.review +
+                    "</p><p class='address'>" +
+                    newLocation.address +
+                    "</p>",
+                },
+                geometry: {
+                  type: "Point",
+                  coordinates: [newLocation.long, newLocation.lat],
                 },
               },
-              layout: {
-                "icon-image": "custom-marker",
-                "icon-allow-overlap": true,
-                "symbol-placement": "point",
-                "icon-anchor": "bottom",
-              },
-            });
-          });
-        }
-    
-        //  this is the same click function as before in the load
-        for (i = 0; i < namesArr.length; i++) {
-          map.on("click", namesArr[i], function (e) {
-            var coordinates = e.features[0].geometry.coordinates.slice();
-            var description = e.features[0].properties.description;
-    
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-    
-            new mapboxgl.Popup()
-              .setLngLat(coordinates)
-              .setHTML(description)
-              .addTo(map);
-          });
+            ],
+          },
+        },
+        layout: {
+          "icon-image": "custom-marker",
+          "icon-allow-overlap": true,
+          "symbol-placement": "point",
+          "icon-anchor": "bottom",
+        },
+      });
+    });
+  }
 
-          // these last two on functions change the mouse from the hand to a pointer when they hover over a marker
-          map.on("mouseenter", namesArr[i], function () {
-            map.getCanvas().style.cursor = "pointer";
-          });
-    
-          map.on("mouseleave", namesArr[i], function () {
-            map.getCanvas().style.cursor = "";
-          });
-        }
-      } else {
-        alert("Name needs to be unique!");
 
-      }
-  });
 });

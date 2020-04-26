@@ -15,28 +15,18 @@
       <input type="text" id="review" name="review" /></label>
 
 
-      <label for="image" class="ui red basic label">Upload image
-      <input type="file" id="placeImg" class="ui inverted orange button" name="placeImg"></label>
+      <label for="image" class="ui inverted orange label">Upload image
+      <input type="file" id="placeImg" class="" name="placeImg"></label>
 
-      <input id="btnSave" name="btnSave" class="ui inverted large red button" type="submit" value="Save" />
+      <input id="btnSave" name="btnSave" class="ui inverted red button" type="submit" value="Save" />
    </form>
-
 
 </div> <!-- END of container -->
 
 <div class="ui grid stackable container wrapperMap">
-   <div class="three column row">
 
-         <div class="ten wide column">
+         <div class="column">
             <div id="map"></div>
          </div>
 
-         <div class="four wide column ui message myHistory ui center aligned header ">
-            <h3>History</h3>
-            {{#each location}}
-            {{name}}
-            {{/each}}
-         </div>
-
-   </div>
 </div>
