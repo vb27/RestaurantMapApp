@@ -3,8 +3,7 @@ $(function () {
   const namesArr = [];
 
   // mapbox key
-  mapboxgl.accessToken =
-    "pk.eyJ1IjoidmIyNyIsImEiOiJjazk4cjdteTgwNDNiM21xdHQ1Y3BtbWhyIn0.oyEQCIxSrbYI1VZ208kcPw";
+  mapboxgl.accessToken = "pk.eyJ1IjoidmIyNyIsImEiOiJjazk4cjdteTgwNDNiM21xdHQ1Y3BtbWhyIn0.oyEQCIxSrbYI1VZ208kcPw"
   // mapbox function to create a map
   var map = new mapboxgl.Map({
     container: "map",
@@ -109,7 +108,6 @@ $(function () {
         "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
         placeA +
         ".json?proximity=-122.27995,47.88047&access_token=pk.eyJ1IjoidmIyNyIsImEiOiJjazk4cjdteTgwNDNiM21xdHQ1Y3BtbWhyIn0.oyEQCIxSrbYI1VZ208kcPw";
-
       $.ajax({
         url: queryURL,
         method: "GET",
