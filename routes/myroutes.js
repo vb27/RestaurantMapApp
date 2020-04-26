@@ -9,7 +9,8 @@ const bcrypt = require("bcrypt");
 
 // First page (login)
 router.get("/", function (req, res) {
-    res.redirect("/login")
+    res.render("index");
+
 });
 
 router.get("/signup", function (req, res) {
