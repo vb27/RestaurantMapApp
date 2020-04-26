@@ -33,7 +33,7 @@ router.post("/signup", function (req, res) {
 
     }).catch(err => {
         console.log(err);
-        res.status(500).json(err);
+        res.redirect("/signup");
     });
 });
 
@@ -57,13 +57,11 @@ router.post("/login", function (req, res) {
             };
             // res.send("logged in!")
             res.redirect('/locations/user');
-        } else {
-            res.redirect('/signup');
-
-        }
+        } 
     }).catch(err => {
-        console.log(err);
-        res.status(404).json(err);
+        // console.log(err);
+        // res.status(404).json(err);
+        res.redirect('/login');        
     });
 });
 
