@@ -3,7 +3,6 @@
          // Giving the Author model a name of type STRING
          name: {
              type: DataTypes.STRING,
-             primaryKey: true,
              //  allowNull: false,
              validate: {
                  len: [1]
